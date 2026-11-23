@@ -62,3 +62,33 @@ const employees = [
 let editingNip = null;
 // NIP yang mau dihapus
 let deletingNip = null;
+/* 3. Format rupiah */
+function formatRupiah(nominal) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(nominal);
+}
+/* 4. Format tanggal */
+function formatTanggal(tanggal) {
+  const date = new Date(tanggal + "T00:00:00");
+  return date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+/* 5. Escape HTML */
+function escapeHTML(value) {
+  const characters = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  };
+  return String(value).replace(/[&<>"']/g, function (character) {
+    return characters[character];
+  });
+}
