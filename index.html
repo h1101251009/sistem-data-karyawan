@@ -1,171 +1,339 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sistem Data Karyawan</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+  <title>Sistem Data Karyawan</title>
 
-    <!-- CSS sendiri -->
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <body>
-    <!-- Navbar -->
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark app-navbar">
-        <div class="container">
-          <a class="navbar-brand fw-bold" href="#"> Sistem Data Karyawan </a>
+  <!-- CSS sendiri -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
-          <span class="navbar-text text-white">
-            Employee Management System
-          </span>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#"> Sistem Data Karyawan </a>
+
+        <span class="navbar-text text-white">
+          Employee Management System
+        </span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Konten utama -->
+  <main class="container py-4">
+    <!-- Header -->
+    <section class="mb-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div>
+          <h1 class="fw-bold mb-1">Dashboard</h1>
+
+          <p class="text-muted mb-0">
+            Kelola dan pantau informasi seluruh karyawan perusahaan.
+          </p>
         </div>
-      </nav>
-    </header>
 
-    <!-- Konten utama -->
-    <main class="container py-4">
-      <!-- Header -->
-      <section class="mb-4">
-        <div
-          class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2"
-        >
-          <div>
-            <h1 class="fw-bold mb-1">Dashboard</h1>
+        <span class="badge text-bg-primary p-2"> Panel HRD </span>
+      </div>
+    </section>
 
-            <p class="text-muted mb-0">
-              Kelola dan pantau informasi seluruh karyawan perusahaan.
-            </p>
-          </div>
+    <!-- Alert notifikasi -->
+    <div id="appAlert" class="alert d-none mb-3" role="alert" aria-live="polite"></div>
 
-          <span class="badge text-bg-primary p-2"> Panel HRD </span>
-        </div>
-      </section>
+    <!-- Kartu ringkasan -->
+    <section class="mb-4" aria-label="Ringkasan karyawan">
+      <div class="row g-3">
+        <!-- Total -->
+        <div class="col-12 col-md-4">
+          <div class="card summary-card h-100 shadow-sm">
+            <div class="card-body">
+              <p class="text-muted mb-1">Total Karyawan</p>
 
-      <!-- Alert notifikasi -->
-      <div
-        id="appAlert"
-        class="alert d-none mb-3"
-        role="alert"
-        aria-live="polite"
-      ></div>
+              <h2 id="totalEmployees" class="summary-number">0</h2>
 
-      <!-- Kartu ringkasan -->
-      <section class="mb-4" aria-label="Ringkasan karyawan">
-        <div class="row g-3">
-          <!-- Total -->
-          <div class="col-12 col-md-4">
-            <div class="card summary-card h-100 shadow-sm">
-              <div class="card-body">
-                <p class="text-muted mb-1">Total Karyawan</p>
-
-                <h2 id="totalEmployees" class="summary-number">0</h2>
-
-                <span class="text-muted small">
-                  Seluruh karyawan terdaftar
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Aktif -->
-          <div class="col-12 col-md-4">
-            <div class="card summary-card active-card h-100 shadow-sm">
-              <div class="card-body">
-                <p class="text-muted mb-1">Karyawan Aktif</p>
-
-                <h2 id="activeEmployees" class="summary-number text-success">
-                  0
-                </h2>
-
-                <span class="text-muted small">
-                  Karyawan yang masih aktif
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Nonaktif -->
-          <div class="col-12 col-md-4">
-            <div class="card summary-card inactive-card h-100 shadow-sm">
-              <div class="card-body">
-                <p class="text-muted mb-1">Karyawan Nonaktif</p>
-
-                <h2
-                  id="inactiveEmployees"
-                  class="summary-number text-secondary"
-                >
-                  0
-                </h2>
-
-                <span class="text-muted small">
-                  Karyawan yang sudah nonaktif
-                </span>
-              </div>
+              <span class="text-muted small">
+                Seluruh karyawan terdaftar
+              </span>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- Manajemen karyawan -->
-      <section aria-labelledby="employeeTitle">
-        <div class="card shadow-sm border-0">
-          <div class="card-body">
-            <!-- Judul + tombol tambah -->
-            <div
-              class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4"
-            >
-              <div>
-                <h2 id="employeeTitle" class="h4 fw-bold mb-1">
-                  Manajemen Karyawan
-                </h2>
+        <!-- Aktif -->
+        <div class="col-12 col-md-4">
+          <div class="card summary-card active-card h-100 shadow-sm">
+            <div class="card-body">
+              <p class="text-muted mb-1">Karyawan Aktif</p>
 
-                <p class="text-muted small mb-0">
-                  Kelola seluruh informasi karyawan perusahaan.
+              <h2 id="activeEmployees" class="summary-number text-success">
+                0
+              </h2>
+
+              <span class="text-muted small">
+                Karyawan yang masih aktif
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nonaktif -->
+        <div class="col-12 col-md-4">
+          <div class="card summary-card inactive-card h-100 shadow-sm">
+            <div class="card-body">
+              <p class="text-muted mb-1">Karyawan Nonaktif</p>
+
+              <h2 id="inactiveEmployees" class="summary-number text-secondary">
+                0
+              </h2>
+
+              <span class="text-muted small">
+                Karyawan yang sudah nonaktif
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Manajemen karyawan -->
+    <section aria-labelledby="employeeTitle">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <!-- Judul + tombol tambah -->
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+              <h2 id="employeeTitle" class="h4 fw-bold mb-1">
+                Manajemen Karyawan
+              </h2>
+
+              <p class="text-muted small mb-0">
+                Kelola seluruh informasi karyawan perusahaan.
+              </p>
+            </div>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#employeeModal">
+              + Tambah Karyawan
+            </button>
+          </div>
+
+          <!-- Search, filter, sort -->
+          <div class="row g-3 mb-4">
+            <!-- Search -->
+            <div class="col-12 col-lg-4">
+              <label for="searchInput" class="form-label">
+                Cari Karyawan
+              </label>
+
+              <input type="search" id="searchInput" class="form-control" placeholder="Cari nama atau NIP..." />
+            </div>
+
+            <!-- Filter departemen -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label for="departmentFilter" class="form-label">
+                Departemen
+              </label>
+
+              <select id="departmentFilter" class="form-select">
+                <option value="">Semua Departemen</option>
+                <option value="IT">IT</option>
+                <option value="HRD">HRD</option>
+                <option value="Keuangan">Keuangan</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Operasional">Operasional</option>
+              </select>
+            </div>
+
+            <!-- Filter status -->
+            <div class="col-12 col-md-6 col-lg-2">
+              <label for="statusFilter" class="form-label"> Status </label>
+
+              <select id="statusFilter" class="form-select">
+                <option value="">Semua Status</option>
+                <option value="aktif">Aktif</option>
+                <option value="nonaktif">Nonaktif</option>
+              </select>
+            </div>
+
+            <!-- Sort -->
+            <div class="col-12 col-lg-3">
+              <label for="sortSelect" class="form-label"> Urutkan </label>
+
+              <select id="sortSelect" class="form-select">
+                <option value="">Urutan Default</option>
+                <option value="nama-asc">Nama A-Z</option>
+                <option value="nama-desc">Nama Z-A</option>
+                <option value="tanggal-desc">Terbaru Masuk</option>
+                <option value="tanggal-asc">Terlama Masuk</option>
+                <option value="gaji-desc">Gaji Tertinggi</option>
+                <option value="gaji-asc">Gaji Terendah</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Search, filter, sort -->
+          <div class="row g-3 mb-4">
+            <!-- Search -->
+            <div class="col-12 col-lg-4">
+              <label for="searchInput" class="form-label">
+                Cari Karyawan
+              </label>
+              <input type="search" id="searchInput" class="form-control" placeholder="Cari nama atau NIP..." />
+            </div>
+
+            <!-- Filter departemen -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <label for="departmentFilter" class="form-label">
+                Departemen
+              </label>
+              <select id="departmentFilter" class="form-select">
+                <option value="">Semua Departemen</option>
+                <option value="IT">IT</option>
+                <option value="HRD">HRD</option>
+                <option value="Keuangan">Keuangan</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Operasional">Operasional</option>
+              </select>
+            </div>
+
+            <!-- Filter status -->
+            <div class="col-12 col-md-6 col-lg-2">
+              <label for="statusFilter" class="form-label"> Status </label>
+              <select id="statusFilter" class="form-select">
+                <option value="">Semua Status</option>
+                <option value="aktif">Aktif</option>
+                <option value="nonaktif">Nonaktif</option>
+              </select>
+            </div>
+
+            <!-- Sort -->
+            <div class="col-12 col-lg-3">
+              <label for="sortSelect" class="form-label"> Urutkan </label>
+              <select id="sortSelect" class="form-select">
+                <option value="">Urutan Default</option>
+                <option value="nama-asc">Nama A-Z</option>
+                <option value="nama-desc">Nama Z-A</option>
+                <option value="tanggal-desc">Terbaru Masuk</option>
+                <option value="tanggal-asc">Terlama Masuk</option>
+                <option value="gaji-desc">Gaji Tertinggi</option>
+                <option value="gaji-asc">Gaji Terendah</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tabel -->
+          <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+              <thead class="table-primary">
+                <tr>
+                  <th>No.</th>
+                  <th>NIP</th>
+                  <th>Nama</th>
+                  <th>Email</th>
+                  <th>Telepon</th>
+                  <th>Jabatan</th>
+                  <th>Departemen</th>
+                  <th>Tanggal Masuk</th>
+                  <th>Gaji</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody id="employeeTableBody">
+                <!-- diisi dari JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Total gaji -->
+          <div class="salary-summary mt-3">
+            <div class="row align-items-center">
+              <div class="col-12 col-md-6">
+                <h3 class="h6 fw-bold mb-1">Total Gaji Karyawan Aktif</h3>
+
+                <p class="text-muted small mb-md-0">
+                  Akumulasi gaji seluruh karyawan aktif.
                 </p>
               </div>
 
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#employeeModal"
-              >
-                + Tambah Karyawan
-              </button>
+              <div class="col-12 col-md-6 text-md-end">
+                <h3 id="totalSalary" class="salary-number mb-0">Rp0</h3>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-            <!-- Search, filter, sort -->
-            <div class="row g-3 mb-4">
-              <!-- Search -->
-              <div class="col-12 col-lg-4">
-                <label for="searchInput" class="form-label">
-                  Cari Karyawan
-                </label>
+  <!-- Modal tambah/edit -->
+  <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="employeeModalTitle">
+            Tambah Karyawan
+          </h2>
 
-                <input
-                  type="search"
-                  id="searchInput"
-                  class="form-control"
-                  placeholder="Cari nama atau NIP..."
-                />
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="employeeForm" novalidate>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label for="employeeNip" class="form-label"> NIP </label>
+
+                <input type="text" id="employeeNip" class="form-control" minlength="8" maxlength="8" pattern="[0-9]{8}"
+                  placeholder="Masukkan 8 digit NIP" required />
               </div>
 
-              <!-- Filter departemen -->
-              <div class="col-12 col-md-6 col-lg-3">
-                <label for="departmentFilter" class="form-label">
+              <div class="col-12 col-md-6">
+                <label for="employeeName" class="form-label">
+                  Nama Lengkap
+                </label>
+
+                <input type="text" id="employeeName" class="form-control" placeholder="Masukkan nama lengkap"
+                  required />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="employeeEmail" class="form-label"> Email </label>
+
+                <input type="email" id="employeeEmail" class="form-control" placeholder="nama@email.com" required />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="employeePhone" class="form-label">
+                  Nomor Telepon
+                </label>
+
+                <input type="tel" id="employeePhone" class="form-control" minlength="10" maxlength="13"
+                  pattern="[0-9]{10,13}" placeholder="Masukkan nomor telepon" required />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="employeePosition" class="form-label">
+                  Jabatan
+                </label>
+
+                <input type="text" id="employeePosition" class="form-control" placeholder="Masukkan jabatan" required />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="employeeDepartment" class="form-label">
                   Departemen
                 </label>
 
-                <select id="departmentFilter" class="form-select">
-                  <option value="">Semua Departemen</option>
+                <select id="employeeDepartment" class="form-select" required>
+                  <option value="">Pilih Departemen</option>
                   <option value="IT">IT</option>
                   <option value="HRD">HRD</option>
                   <option value="Keuangan">Keuangan</option>
@@ -174,325 +342,104 @@
                 </select>
               </div>
 
-              <!-- Filter status -->
-              <div class="col-12 col-md-6 col-lg-2">
-                <label for="statusFilter" class="form-label"> Status </label>
+              <div class="col-12 col-md-6">
+                <label for="employeeJoinDate" class="form-label">
+                  Tanggal Masuk
+                </label>
 
-                <select id="statusFilter" class="form-select">
-                  <option value="">Semua Status</option>
+                <input type="date" id="employeeJoinDate" class="form-control" required />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="employeeSalary" class="form-label">
+                  Gaji (Rp)
+                </label>
+
+                <input type="number" id="employeeSalary" class="form-control" min="1" step="1"
+                  placeholder="Masukkan nominal gaji" required />
+              </div>
+
+              <div class="col-12">
+                <label for="employeeStatus" class="form-label">
+                  Status Karyawan
+                </label>
+
+                <select id="employeeStatus" class="form-select" required>
+                  <option value="">Pilih Status</option>
                   <option value="aktif">Aktif</option>
                   <option value="nonaktif">Nonaktif</option>
                 </select>
               </div>
-
-              <!-- Sort -->
-              <div class="col-12 col-lg-3">
-                <label for="sortSelect" class="form-label"> Urutkan </label>
-
-                <select id="sortSelect" class="form-select">
-                  <option value="">Urutan Default</option>
-                  <option value="nama-asc">Nama A-Z</option>
-                  <option value="nama-desc">Nama Z-A</option>
-                  <option value="tanggal-desc">Terbaru Masuk</option>
-                  <option value="tanggal-asc">Terlama Masuk</option>
-                  <option value="gaji-desc">Gaji Tertinggi</option>
-                  <option value="gaji-asc">Gaji Terendah</option>
-                </select>
-              </div>
             </div>
-
-            <!-- Tabel -->
-            <div class="table-responsive">
-              <table class="table table-hover table-striped align-middle">
-                <thead class="table-primary">
-                  <tr>
-                    <th>No.</th>
-                    <th>NIP</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Telepon</th>
-                    <th>Jabatan</th>
-                    <th>Departemen</th>
-                    <th>Tanggal Masuk</th>
-                    <th>Gaji</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-
-                <tbody id="employeeTableBody">
-                  <!-- diisi dari JS -->
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Total gaji -->
-            <div class="salary-summary mt-3">
-              <div class="row align-items-center">
-                <div class="col-12 col-md-6">
-                  <h3 class="h6 fw-bold mb-1">Total Gaji Karyawan Aktif</h3>
-
-                  <p class="text-muted small mb-md-0">
-                    Akumulasi gaji seluruh karyawan aktif.
-                  </p>
-                </div>
-
-                <div class="col-12 col-md-6 text-md-end">
-                  <h3 id="totalSalary" class="salary-number mb-0">Rp0</h3>
-                </div>
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
-      </section>
-    </main>
 
-    <!-- Modal tambah/edit -->
-    <div
-      class="modal fade"
-      id="employeeModal"
-      tabindex="-1"
-      aria-labelledby="employeeModalTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-5" id="employeeModalTitle">
-              Tambah Karyawan
-            </h2>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Batal
+          </button>
 
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Tutup"
-            ></button>
-          </div>
-
-          <div class="modal-body">
-            <form id="employeeForm" novalidate>
-              <div class="row g-3">
-                <div class="col-12 col-md-6">
-                  <label for="employeeNip" class="form-label"> NIP </label>
-
-                  <input
-                    type="text"
-                    id="employeeNip"
-                    class="form-control"
-                    minlength="8"
-                    maxlength="8"
-                    pattern="[0-9]{8}"
-                    placeholder="Masukkan 8 digit NIP"
-                    required
-                  />
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeeName" class="form-label">
-                    Nama Lengkap
-                  </label>
-
-                  <input
-                    type="text"
-                    id="employeeName"
-                    class="form-control"
-                    placeholder="Masukkan nama lengkap"
-                    required
-                  />
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeeEmail" class="form-label"> Email </label>
-
-                  <input
-                    type="email"
-                    id="employeeEmail"
-                    class="form-control"
-                    placeholder="nama@email.com"
-                    required
-                  />
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeePhone" class="form-label">
-                    Nomor Telepon
-                  </label>
-
-                  <input
-                    type="tel"
-                    id="employeePhone"
-                    class="form-control"
-                    minlength="10"
-                    maxlength="13"
-                    pattern="[0-9]{10,13}"
-                    placeholder="Masukkan nomor telepon"
-                    required
-                  />
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeePosition" class="form-label">
-                    Jabatan
-                  </label>
-
-                  <input
-                    type="text"
-                    id="employeePosition"
-                    class="form-control"
-                    placeholder="Masukkan jabatan"
-                    required
-                  />
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeeDepartment" class="form-label">
-                    Departemen
-                  </label>
-
-                  <select id="employeeDepartment" class="form-select" required>
-                    <option value="">Pilih Departemen</option>
-                    <option value="IT">IT</option>
-                    <option value="HRD">HRD</option>
-                    <option value="Keuangan">Keuangan</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Operasional">Operasional</option>
-                  </select>
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeeJoinDate" class="form-label">
-                    Tanggal Masuk
-                  </label>
-
-                  <input
-                    type="date"
-                    id="employeeJoinDate"
-                    class="form-control"
-                    required
-                  />
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <label for="employeeSalary" class="form-label">
-                    Gaji (Rp)
-                  </label>
-
-                  <input
-                    type="number"
-                    id="employeeSalary"
-                    class="form-control"
-                    min="1"
-                    step="1"
-                    placeholder="Masukkan nominal gaji"
-                    required
-                  />
-                </div>
-
-                <div class="col-12">
-                  <label for="employeeStatus" class="form-label">
-                    Status Karyawan
-                  </label>
-
-                  <select id="employeeStatus" class="form-select" required>
-                    <option value="">Pilih Status</option>
-                    <option value="aktif">Aktif</option>
-                    <option value="nonaktif">Nonaktif</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Batal
-            </button>
-
-            <button
-              type="submit"
-              form="employeeForm"
-              class="btn btn-primary"
-              id="saveEmployeeBtn"
-            >
-              Simpan Karyawan
-            </button>
-          </div>
+          <button type="submit" form="employeeForm" class="btn btn-primary" id="saveEmployeeBtn">
+            Simpan Karyawan
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal hapus -->
-    <div
-      class="modal fade"
-      id="deleteModal"
-      tabindex="-1"
-      aria-labelledby="deleteModalTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-5" id="deleteModalTitle">
-              Konfirmasi Hapus
-            </h2>
+  <!-- Modal hapus -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="deleteModalTitle">
+            Konfirmasi Hapus
+          </h2>
 
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Tutup"
-            ></button>
-          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
 
-          <div class="modal-body">
-            <p>
-              Apakah Anda yakin ingin menghapus data karyawan
-              <strong id="deleteEmployeeName">ini</strong>?
-            </p>
+        <div class="modal-body">
+          <p>
+            Apakah Anda yakin ingin menghapus data karyawan
+            <strong id="deleteEmployeeName">ini</strong>?
+          </p>
 
-            <p class="text-danger small mb-0">
-              Data yang dihapus tidak dapat dikembalikan.
-            </p>
-          </div>
+          <p class="text-danger small mb-0">
+            Data yang dihapus tidak dapat dikembalikan.
+          </p>
+        </div>
 
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Batal
-            </button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Batal
+          </button>
 
-            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-              Ya, Hapus
-            </button>
-          </div>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+            Ya, Hapus
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="app-footer py-3 mt-5">
-      <div class="container text-center">
-        <small class="text-muted">
-          Praktikum Pemrograman Web Dasar &copy; 2026 Sistem Data Karyawan
-        </small>
-      </div>
-    </footer>
+  <!-- Footer -->
+  <footer class="app-footer py-3 mt-5">
+    <div class="container text-center">
+      <small class="text-muted">
+        Praktikum Pemrograman Web Dasar &copy; 2026 Sistem Data Karyawan
+      </small>
+    </div>
+  </footer>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- script.js -->
-    <script src="js/script.js"></script>
-  </body>
+  <!-- script.js -->
+  <script src="js/script.js"></script>
+</body>
+
 </html>
