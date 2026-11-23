@@ -156,3 +156,23 @@ Hapus
   // isi tabel
   $("#employeeTableBody").html(tableContent);
 }
+
+/* 13. Ringkasan dashboard */
+function renderSummary() {
+  const totalEmployees = employees.length;
+  const activeEmployees = employees.filter(function (employee) {
+    return employee.status === "aktif";
+  });
+  const inactiveEmployees = employees.filter(function (employee) {
+    return employee.status === "nonaktif";
+  });
+  // total gaji aktif
+  const totalSalary = activeEmployees.reduce(function (total, employee) {
+    return total + Number(employee.gaji);
+  }, 0);
+  // update dashboard
+  $("#totalEmployees").text(totalEmployees);
+  $("#activeEmployees").text(activeEmployees.length);
+  $("#inactiveEmployees").text(inactiveEmployees.length);
+  $("#totalSalary").text(formatRupiah(totalSalary));
+}
