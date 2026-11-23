@@ -83,43 +83,62 @@
       </div>
     </section>
 
-    <!-- Tabel -->
-    <div class="table-responsive">
-      <table class="table table-hover table-striped align-middle">
-        <thead class="table-primary">
-          <tr>
-            <th>No.</th>
-            <th>NIP</th>
-            <th>Nama</th>
-            <th>Email</th>
-            <th>Telepon</th>
-            <th>Jabatan</th>
-            <th>Departemen</th>
-            <th>Tanggal Masuk</th>
-            <th>Gaji</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody id="employeeTableBody">
-          <!-- diisi dari JS -->
-        </tbody>
-      </table>
-    </div>
-    <!-- Footer -->
-    <footer class="app-footer py-3 mt-5">
-      <div class="container text-center">
-        <small class="text-muted">
-          Praktikum Pemrograman Web Dasar &copy; 2026 Sistem Data Karyawan
-        </small>
-      </div>
-    </footer>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- script.js -->
-    <script src="js/script.js"></script>
+    <!-- Manajemen karyawan -->
+    <section aria-labelledby="employeeTitle">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <!-- Judul + tombol tambah -->
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+              <h2 id="employeeTitle" class="h4 fw-bold mb-1">
+                Manajemen Karyawan
+              </h2>
+              <p class="text-muted small mb-0">
+                Kelola seluruh informasi karyawan perusahaan.
+              </p>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#employeeModal">
+              + Tambah Karyawan
+            </button>
+          </div>
+
+          <!-- Tabel -->
+          <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+              <thead class="table-primary">
+                <tr>
+                  <th>No.</th>
+                  <th>NIP</th>
+                  <th>Nama</th>
+                  <th>Email</th>
+                  <th>Telepon</th>
+                  <th>Jabatan</th>
+                  <th>Departemen</th>
+                  <th>Tanggal Masuk</th>
+                  <th>Gaji</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="employeeTableBody">
+                <!-- diisi dari JS -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Footer -->
+          <footer class="app-footer py-3 mt-5">
+            <div class="container text-center">
+              <small class="text-muted">
+                Praktikum Pemrograman Web Dasar &copy; 2026 Sistem Data Karyawan
+              </small>
+            </div>
+          </footer>
+          <!-- jQuery -->
+          <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+          <!-- Bootstrap JS -->
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+          <!-- script.js -->
+          <script src="js/script.js"></script>
   </main>
 </body>
 
