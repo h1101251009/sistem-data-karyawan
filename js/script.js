@@ -527,6 +527,7 @@ function openDeleteModal(nip) {
     document.getElementById("deleteModal"),
   ).show();
 }
+
 /* 18. Hapus data */
 function deleteEmployee() {
   if (deletingNip === null) {
@@ -554,6 +555,70 @@ function deleteEmployee() {
   showAppAlert("Data karyawan berhasil dihapus.", "success");
 }
 
+/* 19. Inisialisasi dan event */
+$(document).ready(function () {
+  // render awal
+  renderEmployeeTable();
+  renderSummary();
+  // tombol tambah:
+  // form dikosongkan
+  $("#employeeModal").on("show.bs.modal", function (event) {
+    if (event.relatedTarget) {
+      resetEmployeeForm();
+    }
+  });
+  // reset form setelah modal ditutup
+  $("#employeeModal").on("hidden.bs.modal", function () {
+    resetEmployeeForm();
+  });
+  // hapus error saat input diubah
+  $("#employeeForm").on("input change", "input, select", function () {
+    $(this).removeClass("is-invalid").removeAttr("aria-invalid");
+    $(this).next(".invalid-feedback").remove();
+  });
+  // submit form
+  $("#employeeForm").on("submit", function (event) {
+    event.preventDefault();
+    saveEmployee();
+  });
+  // edit/hapus (event delegation)
+  $("#employeeTableBody").on("click", "button[data-action]", function () {
+    const action = $(this).attr("data-action");
+    const nip = String($(this).attr("data-id"));
+    if (action === "edit") {
+      editEmployee(nip);
+    }
+    if (action === "delete") {
+      openDeleteModal(nip);
+    }
+  });
+  // tombol konfirmasi hapus
+  $("#confirmDeleteBtn").on("click", function () {
+    deleteEmployee();
+  });
+  // search
+  $("#searchInput").on("input", function () {
+    renderEmployeeTable();
+  });
+  // filter departemen
+  $("#departmentFilter").on("change", function () {
+    renderEmployeeTable();
+  });
+  // filter status
+  $("#statusFilter").on("change", function () {
+    renderEmployeeTable();
+  });
+  // sort
+  $("#sortSelect").on("change", function () {
+    renderEmployeeTable();
+  });
+  // reset setelah modal hapus ditutup
+  $("#deleteModal").on("hidden.bs.modal", function () {
+    deletingNip = null;
+  });
+  console.log("Sistem Data Karyawan berhasil dijalankan.");
+  console.log("Jumlah data awal:", employees.length);
+});
 
 
 
