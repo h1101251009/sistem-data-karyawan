@@ -412,7 +412,7 @@ function getFilteredEmployees() {
 
   // pilihan sort
   const sortOption = $("#sortSelect").val();
-
+  
   // search + filter
   let filteredEmployees = employees.filter(function (employee) {
     // cocokkan nama / NIP
@@ -437,36 +437,42 @@ function getFilteredEmployees() {
       filteredEmployees.sort(function (a, b) {
         return a.nama.localeCompare(b.nama, "id", { sensitivity: "base" });
       });
+      
       break;
 
     case "nama-desc":
       filteredEmployees.sort(function (a, b) {
         return b.nama.localeCompare(a.nama, "id", { sensitivity: "base" });
       });
+
       break;
 
     case "tanggal-desc":
       filteredEmployees.sort(function (a, b) {
         return b.tanggal_masuk.localeCompare(a.tanggal_masuk);
       });
+
       break;
 
     case "tanggal-asc":
       filteredEmployees.sort(function (a, b) {
         return a.tanggal_masuk.localeCompare(b.tanggal_masuk);
       });
+
       break;
 
     case "gaji-desc":
       filteredEmployees.sort(function (a, b) {
         return Number(b.gaji) - Number(a.gaji);
       });
+
       break;
 
     case "gaji-asc":
       filteredEmployees.sort(function (a, b) {
         return Number(a.gaji) - Number(b.gaji);
       });
+
       break;
   }
 
