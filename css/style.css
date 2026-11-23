@@ -158,3 +158,88 @@ section[aria-labelledby="employeeTitle"] .card-body {
   color: var(--muted-color);
   font-size: 12px;
 }
+/* 16. Responsive tablet */
+@media (max-width: 991px) {
+  main > section:first-child {
+    padding: 20px;
+  }
+  section[aria-labelledby="employeeTitle"] .card-body {
+    padding: 20px;
+  }
+  .summary-card {
+    min-height: 135px;
+  }
+}
+/* 17. Responsive mobile */
+@media (max-width: 576px) {
+  body {
+    font-size: 13px;
+  }
+  .app-navbar {
+    padding: 13px 0;
+  }
+  .app-navbar .navbar-brand {
+    font-size: 15px;
+  }
+  .app-navbar .navbar-brand::before {
+    width: 31px;
+    height: 31px;
+    font-size: 14px;
+  }
+  .navbar-text {
+    display: none;
+  }
+  main.container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  main > section:first-child {
+    padding: 18px;
+    border-radius: 14px;
+  }
+  main h1 {
+    font-size: 25px;
+  }
+  .summary-card {
+    min-height: 125px;
+  }
+  .summary-card .card-body {
+    padding: 17px;
+  }
+  .summary-number {
+    font-size: 29px;
+  }
+  section[aria-labelledby="employeeTitle"] .card-body {
+    padding: 17px;
+  }
+  #employeeTitle {
+    font-size: 19px;
+  }
+  .salary-summary {
+    padding: 16px;
+  }
+  .salary-number {
+    margin-top: 10px;
+    font-size: 23px;
+  }
+  .modal-body {
+    padding: 18px;
+  }
+  .modal-header,
+  .modal-footer {
+    padding: 15px 18px;
+  }
+  .app-footer {
+    padding: 18px 0 !important;
+  }
+}
+/* 18. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
