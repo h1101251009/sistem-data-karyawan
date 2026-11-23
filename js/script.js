@@ -238,3 +238,12 @@ function saveEmployee() {
     document.getElementById("employeeModal"),
   ).hide();
 }
+
+
+/* 6. Notifikasi */
+function showAppAlert(message, type = "success") {
+  $("#appAlert")
+    .removeClass("d-none alert-success alert-danger alert-warning alert-info")
+    .addClass("alert alert-" + type)
+    .text(message);
+}
