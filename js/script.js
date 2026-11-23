@@ -91,152 +91,7 @@ function escapeHTML(value) {
   return String(value).replace(/[&<>"']/g, function (character) {
     return characters[character];
   });
-}
 
-/* 10. Reset form */
-function resetEmployeeForm() {
-  $("#employeeForm")[0].reset();
-  clearValidation();
-  editingNip = null;
-  $("#employeeModalTitle").text("Tambah Karyawan");
-  $("#saveEmployeeBtn").text("Simpan Karyawan");
-}
-
-/* 12. Render tabel */
-function renderEmployeeTable() {
-  // data hasil filter
-  const displayedEmployees = getFilteredEmployees();
-  let tableContent = "";
-  // kalau kosong
-  if (displayedEmployees.length === 0) {
-    tableContent = `
-<tr>
-<td colspan="11" class="text-center py-4 text-muted">
-<strong>Data karyawan tidak ditemukan.</strong>
-<br>
-<small>
-Coba ubah kata pencarian atau filter yang digunakan.
-</small>
-</td>
-</tr>
-`;
-  }
-  // bikin baris tabel
-  displayedEmployees.forEach(function (employee, index) {
-    // badge status
-    const statusBadge =
-      employee.status === "aktif"
-        ? '<span class="badge text-bg-success">Aktif</span>'
-        : '<span class="badge text-bg-secondary">Nonaktif</span>';
-    tableContent += `
-<tr>
-<td>${index + 1}</td>
-<td>${escapeHTML(employee.nip)}</td>
-<td class="fw-semibold">
-${escapeHTML(employee.nama)}
-</td>
-<td>${escapeHTML(employee.email)}</td>
-<td>${escapeHTML(employee.telepon)}</td>
-<td>${escapeHTML(employee.jabatan)}</td>
-<td>${escapeHTML(employee.departemen)}</td>
-<td>${formatTanggal(employee.tanggal_masuk)}</td>
-<td>${formatRupiah(employee.gaji)}</td>
-<td>${statusBadge}</td>
-<td>
-<button
-type="button"
-class="btn btn-sm btn-outline-primary me-1"
-data-action="edit"
-data-id="${escapeHTML(employee.nip)}"
->
-Edit
-</button>
-<button
-type="button"
-class="btn btn-sm btn-outline-danger"
-data-action="delete"
-data-id="${escapeHTML(employee.nip)}"
->
-Hapus
-</button>
-</td>
-</tr>
-`;
-  });
-  // isi tabel
-  $("#employeeTableBody").html(tableContent);
-}
-
-/* 13. Ringkasan dashboard */
-function renderSummary() {
-  const totalEmployees = employees.length;
-  const activeEmployees = employees.filter(function (employee) {
-    return employee.status === "aktif";
-  });
-  const inactiveEmployees = employees.filter(function (employee) {
-    return employee.status === "nonaktif";
-  });
-  // total gaji aktif
-  const totalSalary = activeEmployees.reduce(function (total, employee) {
-    return total + Number(employee.gaji);
-  }, 0);
-  // update dashboard
-  $("#totalEmployees").text(totalEmployees);
-  $("#activeEmployees").text(activeEmployees.length);
-  $("#inactiveEmployees").text(inactiveEmployees.length);
-  $("#totalSalary").text(formatRupiah(totalSalary));
-}
-
-/* 14. Ambil data form */
-function getEmployeeFormData() {
-  return {
-    nip: $.trim($("#employeeNip").val()),
-    nama: $.trim($("#employeeName").val()),
-    email: $.trim($("#employeeEmail").val()),
-    telepon: $.trim($("#employeePhone").val()),
-    jabatan: $.trim($("#employeePosition").val()),
-    departemen: $("#employeeDepartment").val(),
-    tanggal_masuk: $("#employeeJoinDate").val(),
-    gaji: Number($("#employeeSalary").val()),
-    status: $("#employeeStatus").val(),
-  };
-}
-
-/* 15. Simpan data */
-function saveEmployee() {
-  // validasi dulu
-  if (!validateEmployeeForm()) {
-    $("#employeeForm .is-invalid").first().trigger("focus");
-    showAppAlert("Periksa kembali data yang kamu masukkan.", "danger");
-    return;
-  }
-  // ambil data form
-  const employeeData = getEmployeeFormData();
-  if (editingNip !== null) {
-    // cari data yang diedit
-    const employeeIndex = employees.findIndex(function (employee) {
-      return employee.nip === editingNip;
-    });
-    if (employeeIndex === -1) {
-      showAppAlert("Data karyawan tidak ditemukan.", "danger");
-      return;
-    }
-    // update data
-    employees[employeeIndex] = employeeData;
-    // pesan sukses
-    showAppAlert("Data karyawan berhasil diperbarui.", "success");
-  } else {
-    // tambah baru
-    employees.push(employeeData);
-    showAppAlert("Karyawan baru berhasil ditambahkan.", "success");
-  }
-  // refresh tabel dan ringkasan
-  renderEmployeeTable();
-  renderSummary();
-  // tutup modal
-  bootstrap.Modal.getOrCreateInstance(
-    document.getElementById("employeeModal"),
-  ).hide();
 }
 
 
@@ -412,7 +267,7 @@ function getFilteredEmployees() {
 
   // pilihan sort
   const sortOption = $("#sortSelect").val();
-  
+
   // search + filter
   let filteredEmployees = employees.filter(function (employee) {
     // cocokkan nama / NIP
@@ -437,7 +292,7 @@ function getFilteredEmployees() {
       filteredEmployees.sort(function (a, b) {
         return a.nama.localeCompare(b.nama, "id", { sensitivity: "base" });
       });
-      
+
       break;
 
     case "nama-desc":
@@ -550,3 +405,156 @@ function renderEmployeeTable() {
   // isi tabel
   $("#employeeTableBody").html(tableContent);
 }
+
+
+/* 13. Ringkasan dashboard */
+function renderSummary() {
+  const totalEmployees = employees.length;
+  const activeEmployees = employees.filter(function (employee) {
+    return employee.status === "aktif";
+  });
+  const inactiveEmployees = employees.filter(function (employee) {
+    return employee.status === "nonaktif";
+  });
+  // total gaji aktif
+  const totalSalary = activeEmployees.reduce(function (total, employee) {
+    return total + Number(employee.gaji);
+  }, 0);
+  // update dashboard
+  $("#totalEmployees").text(totalEmployees);
+  $("#activeEmployees").text(activeEmployees.length);
+  $("#inactiveEmployees").text(inactiveEmployees.length);
+  $("#totalSalary").text(formatRupiah(totalSalary));
+}
+
+/* 14. Ambil data form */
+function getEmployeeFormData() {
+  return {
+    nip: $.trim($("#employeeNip").val()),
+    nama: $.trim($("#employeeName").val()),
+    email: $.trim($("#employeeEmail").val()),
+    telepon: $.trim($("#employeePhone").val()),
+    jabatan: $.trim($("#employeePosition").val()),
+    departemen: $("#employeeDepartment").val(),
+    tanggal_masuk: $("#employeeJoinDate").val(),
+    gaji: Number($("#employeeSalary").val()),
+    status: $("#employeeStatus").val(),
+  };
+}
+
+/* 15. Simpan data */
+function saveEmployee() {
+  // validasi dulu
+  if (!validateEmployeeForm()) {
+    $("#employeeForm .is-invalid").first().trigger("focus");
+    showAppAlert("Periksa kembali data yang kamu masukkan.", "danger");
+    return;
+  }
+  // ambil data form
+  const employeeData = getEmployeeFormData();
+  if (editingNip !== null) {
+    // cari data yang diedit
+    const employeeIndex = employees.findIndex(function (employee) {
+      return employee.nip === editingNip;
+    });
+    if (employeeIndex === -1) {
+      showAppAlert("Data karyawan tidak ditemukan.", "danger");
+      return;
+    }
+    // update data
+    employees[employeeIndex] = employeeData;
+    // pesan sukses
+    showAppAlert("Data karyawan berhasil diperbarui.", "success");
+  } else {
+    // tambah baru
+    employees.push(employeeData);
+    showAppAlert("Karyawan baru berhasil ditambahkan.", "success");
+  }
+  // refresh tabel dan ringkasan
+  renderEmployeeTable();
+  renderSummary();
+  // tutup modal
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("employeeModal"),
+  ).hide();
+}
+
+/* 16. Buka form edit */
+function editEmployee(nip) {
+  const employee = employees.find(function (item) {
+    return item.nip === nip;
+  });
+  if (!employee) {
+    showAppAlert("Data karyawan tidak ditemukan.", "danger");
+    return;
+  }
+  // simpan NIP lama
+  editingNip = employee.nip;
+  // isi form
+  $("#employeeNip").val(employee.nip);
+  $("#employeeName").val(employee.nama);
+  $("#employeeEmail").val(employee.email);
+  $("#employeePhone").val(employee.telepon);
+  $("#employeePosition").val(employee.jabatan);
+  $("#employeeDepartment").val(employee.departemen);
+  $("#employeeJoinDate").val(employee.tanggal_masuk);
+  $("#employeeSalary").val(employee.gaji);
+  $("#employeeStatus").val(employee.status);
+  // judul modal
+  $("#employeeModalTitle").text("Edit Data Karyawan");
+  $("#saveEmployeeBtn").text("Simpan Perubahan");
+  // buka modal
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("employeeModal"),
+  ).show();
+}
+
+/* 17. Buka konfirmasi hapus */
+function openDeleteModal(nip) {
+  const employee = employees.find(function (item) {
+    return item.nip === nip;
+  });
+  if (!employee) {
+    showAppAlert("Data karyawan tidak ditemukan.", "danger");
+    return;
+  }
+  // simpan NIP target
+  deletingNip = employee.nip;
+  // nama di modal
+  $("#deleteEmployeeName").text(employee.nama);
+  // buka modal
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("deleteModal"),
+  ).show();
+}
+/* 18. Hapus data */
+function deleteEmployee() {
+  if (deletingNip === null) {
+    return;
+  }
+  const employeeIndex = employees.findIndex(function (employee) {
+    return employee.nip === deletingNip;
+  });
+  if (employeeIndex === -1) {
+    showAppAlert("Data karyawan tidak ditemukan.", "danger");
+    return;
+  }
+  // hapus dari array
+  employees.splice(employeeIndex, 1);
+  // reset penanda hapus
+  deletingNip = null;
+  // refresh tampilan
+  renderEmployeeTable();
+  renderSummary();
+  // tutup modal
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("deleteModal"),
+  ).hide();
+  // pesan sukses
+  showAppAlert("Data karyawan berhasil dihapus.", "success");
+}
+
+
+
+
+
