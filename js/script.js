@@ -92,3 +92,67 @@ function escapeHTML(value) {
     return characters[character];
   });
 }
+/* 12. Render tabel */
+function renderEmployeeTable() {
+  // data hasil filter
+  const displayedEmployees = getFilteredEmployees();
+  let tableContent = "";
+  // kalau kosong
+  if (displayedEmployees.length === 0) {
+    tableContent = `
+<tr>
+<td colspan="11" class="text-center py-4 text-muted">
+<strong>Data karyawan tidak ditemukan.</strong>
+<br>
+<small>
+Coba ubah kata pencarian atau filter yang digunakan.
+</small>
+</td>
+</tr>
+`;
+  }
+  // bikin baris tabel
+  displayedEmployees.forEach(function (employee, index) {
+    // badge status
+    const statusBadge =
+      employee.status === "aktif"
+        ? '<span class="badge text-bg-success">Aktif</span>'
+        : '<span class="badge text-bg-secondary">Nonaktif</span>';
+    tableContent += `
+<tr>
+<td>${index + 1}</td>
+<td>${escapeHTML(employee.nip)}</td>
+<td class="fw-semibold">
+${escapeHTML(employee.nama)}
+</td>
+<td>${escapeHTML(employee.email)}</td>
+<td>${escapeHTML(employee.telepon)}</td>
+<td>${escapeHTML(employee.jabatan)}</td>
+<td>${escapeHTML(employee.departemen)}</td>
+<td>${formatTanggal(employee.tanggal_masuk)}</td>
+<td>${formatRupiah(employee.gaji)}</td>
+<td>${statusBadge}</td>
+<td>
+<button
+type="button"
+class="btn btn-sm btn-outline-primary me-1"
+data-action="edit"
+data-id="${escapeHTML(employee.nip)}"
+>
+Edit
+</button>
+<button
+type="button"
+class="btn btn-sm btn-outline-danger"
+data-action="delete"
+data-id="${escapeHTML(employee.nip)}"
+>
+Hapus
+</button>
+</td>
+</tr>
+`;
+  });
+  // isi tabel
+  $("#employeeTableBody").html(tableContent);
+}
