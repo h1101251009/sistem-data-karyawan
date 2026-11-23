@@ -92,6 +92,16 @@ function escapeHTML(value) {
     return characters[character];
   });
 }
+
+/* 10. Reset form */
+function resetEmployeeForm() {
+  $("#employeeForm")[0].reset();
+  clearValidation();
+  editingNip = null;
+  $("#employeeModalTitle").text("Tambah Karyawan");
+  $("#saveEmployeeBtn").text("Simpan Karyawan");
+}
+
 /* 12. Render tabel */
 function renderEmployeeTable() {
   // data hasil filter
@@ -175,4 +185,19 @@ function renderSummary() {
   $("#activeEmployees").text(activeEmployees.length);
   $("#inactiveEmployees").text(inactiveEmployees.length);
   $("#totalSalary").text(formatRupiah(totalSalary));
+}
+
+/* 14. Ambil data form */
+function getEmployeeFormData() {
+  return {
+    nip: $.trim($("#employeeNip").val()),
+    nama: $.trim($("#employeeName").val()),
+    email: $.trim($("#employeeEmail").val()),
+    telepon: $.trim($("#employeePhone").val()),
+    jabatan: $.trim($("#employeePosition").val()),
+    departemen: $("#employeeDepartment").val(),
+    tanggal_masuk: $("#employeeJoinDate").val(),
+    gaji: Number($("#employeeSalary").val()),
+    status: $("#employeeStatus").val(),
+  };
 }
