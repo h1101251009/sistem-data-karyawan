@@ -177,56 +177,7 @@
             </div>
           </div>
 
-          <!-- Search, filter, sort -->
-          <div class="row g-3 mb-4">
-            <!-- Search -->
-            <div class="col-12 col-lg-4">
-              <label for="searchInput" class="form-label">
-                Cari Karyawan
-              </label>
-              <input type="search" id="searchInput" class="form-control" placeholder="Cari nama atau NIP..." />
-            </div>
-
-            <!-- Filter departemen -->
-            <div class="col-12 col-md-6 col-lg-3">
-              <label for="departmentFilter" class="form-label">
-                Departemen
-              </label>
-              <select id="departmentFilter" class="form-select">
-                <option value="">Semua Departemen</option>
-                <option value="IT">IT</option>
-                <option value="HRD">HRD</option>
-                <option value="Keuangan">Keuangan</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Operasional">Operasional</option>
-              </select>
-            </div>
-
-            <!-- Filter status -->
-            <div class="col-12 col-md-6 col-lg-2">
-              <label for="statusFilter" class="form-label"> Status </label>
-              <select id="statusFilter" class="form-select">
-                <option value="">Semua Status</option>
-                <option value="aktif">Aktif</option>
-                <option value="nonaktif">Nonaktif</option>
-              </select>
-            </div>
-
-            <!-- Sort -->
-            <div class="col-12 col-lg-3">
-              <label for="sortSelect" class="form-label"> Urutkan </label>
-              <select id="sortSelect" class="form-select">
-                <option value="">Urutan Default</option>
-                <option value="nama-asc">Nama A-Z</option>
-                <option value="nama-desc">Nama Z-A</option>
-                <option value="tanggal-desc">Terbaru Masuk</option>
-                <option value="tanggal-asc">Terlama Masuk</option>
-                <option value="gaji-desc">Gaji Tertinggi</option>
-                <option value="gaji-asc">Gaji Terendah</option>
-              </select>
-            </div>
-          </div>
-
+          
           <!-- Tabel -->
           <div class="table-responsive">
             <table class="table table-hover table-striped align-middle">
@@ -414,7 +365,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Batal
           </button>
-          
+
           <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
             Ya, Hapus
           </button>
