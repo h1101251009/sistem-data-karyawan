@@ -1,0 +1,102 @@
+/* Sistem Data Karyawan - style */
+/* 1. Variabel warna */
+:root {
+  --primary-color: #203f80;
+  --primary-dark: #172f63;
+  --primary-light: #eaf0ff;
+  --secondary-color: #f4b942;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --background-color: #f4f6fb;
+  --surface-color: #ffffff;
+  --text-color: #24324a;
+  --muted-color: #7c8799;
+  --border-color: #e8ecf3;
+  --shadow-sm: 0 3px 12px rgba(30, 55, 100, 0.06);
+  --shadow-md: 0 8px 25px rgba(30, 55, 100, 0.09);
+}
+/* 2. Reset dan dasar */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(67, 112, 205, 0.06),
+      transparent 35%
+    ),
+    var(--background-color);
+  color: var(--text-color);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* 3. Navbar */
+.app-navbar {
+  background: linear-gradient(115deg, #172f63 0%, #203f80 60%, #3157a4 100%);
+  padding: 17px 0;
+  border-bottom: 3px solid var(--secondary-color);
+  box-shadow: 0 4px 18px rgba(23, 47, 99, 0.15);
+}
+.app-navbar .container {
+  gap: 15px;
+}
+.app-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+.app-navbar .navbar-brand::before {
+  content: "◆";
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background: var(--secondary-color);
+  color: var(--primary-dark);
+  font-size: 17px;
+}
+.app-navbar .navbar-text {
+  font-size: 12px;
+  color: #dce7ff;
+  letter-spacing: 0.5px;
+}
+/* 4. Konten dashboard */
+main.container {
+  max-width: 1440px;
+}
+main > section:first-child {
+  padding: 24px 26px;
+  background: linear-gradient(120deg, #ffffff 0%, #f0f4ff 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+}
+main h1 {
+  color: var(--primary-color);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+main h2 {
+  color: var(--primary-color);
+}
+/* 15. Footer */
+.app-footer {
+  margin-top: 40px !important;
+  padding: 22px 0 !important;
+  background: #ffffff;
+  border-top: 1px solid var(--border-color);
+}
+.app-footer small {
+  color: var(--muted-color);
+  font-size: 12px;
+}
