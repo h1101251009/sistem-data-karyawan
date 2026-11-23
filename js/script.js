@@ -395,3 +395,81 @@ function resetEmployeeForm() {
   $("#employeeModalTitle").text("Tambah Karyawan");
   $("#saveEmployeeBtn").text("Simpan Karyawan");
 }
+
+
+/* 11. Filter, search, sort */
+function getFilteredEmployees() {
+  // keyword pencarian
+  const keyword = String($("#searchInput").val() || "")
+    .trim()
+    .toLowerCase();
+
+  // filter departemen
+  const department = $("#departmentFilter").val();
+
+  // filter status
+  const status = $("#statusFilter").val();
+
+  // pilihan sort
+  const sortOption = $("#sortSelect").val();
+
+  // search + filter
+  let filteredEmployees = employees.filter(function (employee) {
+    // cocokkan nama / NIP
+    const matchesKeyword =
+      employee.nama.toLowerCase().includes(keyword) ||
+      employee.nip.includes(keyword);
+
+    // cek departemen
+    const matchesDepartment =
+      department === "" || employee.departemen === department;
+
+    // cek status
+    const matchesStatus = status === "" || employee.status === status;
+
+    // semua syarat harus cocok
+    return matchesKeyword && matchesDepartment && matchesStatus;
+  });
+
+  // urutkan
+  switch (sortOption) {
+    case "nama-asc":
+      filteredEmployees.sort(function (a, b) {
+        return a.nama.localeCompare(b.nama, "id", { sensitivity: "base" });
+      });
+      break;
+
+    case "nama-desc":
+      filteredEmployees.sort(function (a, b) {
+        return b.nama.localeCompare(a.nama, "id", { sensitivity: "base" });
+      });
+      break;
+
+    case "tanggal-desc":
+      filteredEmployees.sort(function (a, b) {
+        return b.tanggal_masuk.localeCompare(a.tanggal_masuk);
+      });
+      break;
+
+    case "tanggal-asc":
+      filteredEmployees.sort(function (a, b) {
+        return a.tanggal_masuk.localeCompare(b.tanggal_masuk);
+      });
+      break;
+
+    case "gaji-desc":
+      filteredEmployees.sort(function (a, b) {
+        return Number(b.gaji) - Number(a.gaji);
+      });
+      break;
+
+    case "gaji-asc":
+      filteredEmployees.sort(function (a, b) {
+        return Number(a.gaji) - Number(b.gaji);
+      });
+      break;
+  }
+
+  // hasil akhir
+  return filteredEmployees;
+}
