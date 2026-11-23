@@ -89,6 +89,85 @@ main h1 {
 main h2 {
   color: var(--primary-color);
 }
+
+/* 6. Kartu ringkasan */
+.summary-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 145px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md) !important;
+}
+.summary-card .card-body {
+  position: relative;
+  z-index: 1;
+  padding: 22px;
+}
+.summary-card .card-body > p {
+  color: var(--muted-color);
+  font-weight: 600;
+  font-size: 13px;
+}
+.summary-number {
+  margin: 7px 0;
+  color: var(--primary-color);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.summary-card .card-body::after {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 14px;
+  font-size: 23px;
+  font-weight: bold;
+  z-index: -1;
+}
+[aria-label="Ringkasan karyawan"]
+  .row
+  > div:nth-child(1)
+  .summary-card
+  .card-body::after {
+  content: "♙";
+  color: #3157a4;
+  background-color: #eaf0ff;
+}
+[aria-label="Ringkasan karyawan"]
+  .row
+  > div:nth-child(2)
+  .summary-card
+  .card-body::after {
+  content: "✓";
+  color: #198754;
+  background-color: #e5f6ec;
+}
+[aria-label="Ringkasan karyawan"]
+  .row
+  > div:nth-child(3)
+  .summary-card
+  .card-body::after {
+  content: "–";
+  color: #6c757d;
+  background-color: #eff1f4;
+}
+.summary-card .card-body > span {
+  font-size: 12px;
+}
+
 /* 7. Kartu manajemen */
 section[aria-labelledby="employeeTitle"] > .card {
   border: 1px solid var(--border-color) !important;
