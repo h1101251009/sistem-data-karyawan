@@ -201,3 +201,40 @@ function getEmployeeFormData() {
     status: $("#employeeStatus").val(),
   };
 }
+
+/* 15. Simpan data */
+function saveEmployee() {
+  // validasi dulu
+  if (!validateEmployeeForm()) {
+    $("#employeeForm .is-invalid").first().trigger("focus");
+    showAppAlert("Periksa kembali data yang kamu masukkan.", "danger");
+    return;
+  }
+  // ambil data form
+  const employeeData = getEmployeeFormData();
+  if (editingNip !== null) {
+    // cari data yang diedit
+    const employeeIndex = employees.findIndex(function (employee) {
+      return employee.nip === editingNip;
+    });
+    if (employeeIndex === -1) {
+      showAppAlert("Data karyawan tidak ditemukan.", "danger");
+      return;
+    }
+    // update data
+    employees[employeeIndex] = employeeData;
+    // pesan sukses
+    showAppAlert("Data karyawan berhasil diperbarui.", "success");
+  } else {
+    // tambah baru
+    employees.push(employeeData);
+    showAppAlert("Karyawan baru berhasil ditambahkan.", "success");
+  }
+  // refresh tabel dan ringkasan
+  renderEmployeeTable();
+  renderSummary();
+  // tutup modal
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("employeeModal"),
+  ).hide();
+}
