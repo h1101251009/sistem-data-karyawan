@@ -247,3 +247,141 @@ function showAppAlert(message, type = "success") {
     .addClass("alert alert-" + type)
     .text(message);
 }
+
+
+/* 7. Hapus pesan validasi */
+function clearValidation() {
+  $("#employeeForm .is-invalid")
+    .removeClass("is-invalid")
+    .removeAttr("aria-invalid");
+  $("#employeeForm .invalid-feedback").remove();
+}
+
+/* 8. Pesan error input */
+function setFieldError(fieldId, message) {
+  const field = $("#" + fieldId);
+  field.addClass("is-invalid").attr("aria-invalid", "true");
+
+  let feedback = field.next(".invalid-feedback");
+  if (!feedback.length) {
+    feedback = $("<div>", {
+      class: "invalid-feedback",
+    });
+    field.after(feedback);
+  }
+
+  feedback.text(message);
+}
+
+/* 9. Validasi form */
+function validateEmployeeForm() {
+  clearValidation();
+  let isValid = true;
+
+  // ambil nilai input
+  const nip = $.trim($("#employeeNip").val());
+  const nama = $.trim($("#employeeName").val());
+  const email = $.trim($("#employeeEmail").val());
+  const telepon = $.trim($("#employeePhone").val());
+  const jabatan = $.trim($("#employeePosition").val());
+  const departemen = $("#employeeDepartment").val();
+  const tanggalMasuk = $("#employeeJoinDate").val();
+  const gaji = $("#employeeSalary").val();
+  const status = $("#employeeStatus").val();
+
+  // nip
+  if (!/^[0-9]{8}$/.test(nip)) {
+    setFieldError("employeeNip", "NIP harus terdiri dari tepat 8 digit angka.");
+    isValid = false;
+  } else {
+    // cek duplikat
+    const duplicateNip = employees.some(function (employee) {
+      return employee.nip === nip && employee.nip !== editingNip;
+    });
+
+    if (duplicateNip) {
+      setFieldError("employeeNip", "NIP tersebut sudah terdaftar.");
+      isValid = false;
+    }
+  }
+
+  // nama
+  if (nama === "") {
+    setFieldError("employeeName", "Nama lengkap wajib diisi.");
+    isValid = false;
+  }
+
+  // email
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    setFieldError(
+      "employeeEmail",
+      "Masukkan alamat email dengan format yang valid.",
+    );
+    isValid = false;
+  }
+
+  // telepon
+  if (!/^[0-9]{10,13}$/.test(telepon)) {
+    setFieldError(
+      "employeePhone",
+      "Nomor telepon harus terdiri dari 10 sampai 13 digit.",
+    );
+    isValid = false;
+  }
+
+  // jabatan
+  if (jabatan === "") {
+    setFieldError("employeePosition", "Jabatan wajib diisi.");
+    isValid = false;
+  }
+
+  // departemen
+  const departments = ["IT", "HRD", "Keuangan", "Marketing", "Operasional"];
+  if (!departments.includes(departemen)) {
+    setFieldError("employeeDepartment", "Silakan pilih departemen.");
+    isValid = false;
+  }
+
+  // tanggal masuk
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  let validDate = false;
+  if (datePattern.test(tanggalMasuk)) {
+    const parts = tanggalMasuk.split("-").map(Number);
+    const date = new Date(parts[0], parts[1] - 1, parts[2]);
+    validDate =
+      date.getFullYear() === parts[0] &&
+      date.getMonth() === parts[1] - 1 &&
+      date.getDate() === parts[2];
+  }
+
+  if (!validDate) {
+    setFieldError(
+      "employeeJoinDate",
+      "Tanggal masuk wajib diisi dengan tanggal yang valid.",
+    );
+    isValid = false;
+  }
+
+  // gaji
+  const salaryNumber = Number(gaji);
+  if (
+    $.trim(gaji) === "" ||
+    !Number.isFinite(salaryNumber) ||
+    salaryNumber <= 0
+  ) {
+    setFieldError(
+      "employeeSalary",
+      "Gaji harus berupa angka yang lebih besar dari 0.",
+    );
+    isValid = false;
+  }
+
+  // status
+  if (!["aktif", "nonaktif"].includes(status)) {
+    setFieldError("employeeStatus", "Silakan pilih status karyawan.");
+    isValid = false;
+  }
+
+  return isValid;
+}
