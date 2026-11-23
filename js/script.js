@@ -385,3 +385,13 @@ function validateEmployeeForm() {
 
   return isValid;
 }
+
+
+/* 10. Reset form */
+function resetEmployeeForm() {
+  $("#employeeForm")[0].reset();
+  clearValidation();
+  editingNip = null;
+  $("#employeeModalTitle").text("Tambah Karyawan");
+  $("#saveEmployeeBtn").text("Simpan Karyawan");
+}
