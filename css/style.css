@@ -346,6 +346,31 @@ section[aria-labelledby="employeeTitle"] .card-body {
   font-size: 11px;
 }
 
+/* 12. Ringkasan gaji */
+.salary-summary {
+  margin-top: 20px !important;
+  padding: 21px;
+  background: linear-gradient(110deg, #edf3ff, #f7f9ff);
+  border: 1px solid #dce6fa;
+  border-left: 5px solid var(--primary-color);
+  border-radius: 12px;
+}
+
+.salary-summary h3 {
+  color: var(--primary-color);
+}
+
+.salary-summary p {
+  color: var(--muted-color);
+}
+
+.salary-number {
+  color: var(--primary-color);
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
 /* 13. Modal */
 .modal-content {
   overflow: hidden;
